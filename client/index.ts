@@ -2,8 +2,9 @@ import { CosmWasmClient , SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargat
 import { SigningStargateClient, StargateClient , GasPrice  } from "@cosmjs/stargate";
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { assertIsBroadcastTxSuccess } = require("@cosmjs/stargate");
+require('dotenv').config();
 
-const mnemonic = ""
+const mnemonic = process.env.MNEMONIC;
 
 
 async function connect() {
@@ -11,7 +12,7 @@ async function connect() {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, { prefix: "mantra" });
     const [{ address }] = await wallet.getAccounts();
 
-    const rpcEndpoint = "https://rpc.hongbai.mantrachain.io"
+    const rpcEndpoint = "https://rpc.orai.io"
 
     const client = await SigningStargateClient.connectWithSigner(rpcEndpoint, wallet);
 
