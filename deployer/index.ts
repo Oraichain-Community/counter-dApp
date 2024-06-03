@@ -19,7 +19,7 @@ async function deploy() {
   console.log(`Wallet address: ${account.address}`);
 
   // Step 2: Connect to the blockchain
-  const client = await SigningCosmWasmClient.connectWithSigner(rpcEndpoint, wallet , { gasPrice: GasPrice.fromString('0.25orai')});
+  const client = await SigningCosmWasmClient.connectWithSigner(rpcEndpoint, wallet , { gasPrice: GasPrice.fromString('0.0025orai')});
   console.log("Connected to blockchain");
 
   // Step 3: Upload contract 

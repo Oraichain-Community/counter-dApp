@@ -9,7 +9,7 @@ const mnemonic = process.env.MNEMONIC;
 
 async function connect() {
 
-    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, { prefix: "mantra" });
+    const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, { prefix: "orai" });
     const [{ address }] = await wallet.getAccounts();
 
     const rpcEndpoint = "https://rpc.orai.io"
@@ -49,7 +49,7 @@ export async function getCosmWasmClient(
       rpcEndpoint,
       wallet,
       {
-        gasPrice: GasPrice.fromString('0.0025uom'),
+        gasPrice: GasPrice.fromString('0.00025orai'),
       }
     );
 
