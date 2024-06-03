@@ -1,3 +1,3 @@
 # counter-dApp
 
-orai1k8mvpcct87agp72f02v84c9rqv5hlxr3mexsg6nq5sskcrun49eq9nqcys
+contract : orai1lkfg3s276jlwudq0690h68wdgx040celgrrx9w37zx4atf8aae6sp0tw0q

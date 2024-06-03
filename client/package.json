@@ -14,7 +14,8 @@
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/proto-signing": "^0.32.3",
     "@cosmjs/stargate": "^0.32.3",
-    "@cosmwasm/ts-codegen": "^1.10.0"
+    "@cosmwasm/ts-codegen": "^1.10.0",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "typescript": "^5.4.5"

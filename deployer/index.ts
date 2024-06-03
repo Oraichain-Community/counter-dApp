@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const mnemonic = process.env.MNEMONIC; // Replace with your mnemonic
 const rpcEndpoint = process.env.RPC; // Replace with your RPC endpoint
-const contractWasmPath = "./contract.wasm"; // Path to your compiled contract
+const contractWasmPath = "./dinonum.wasm"; // Path to your compiled contract
 
 async function deploy() {
   // Step 1: Set up wallet and client
@@ -23,15 +23,18 @@ async function deploy() {
   console.log("Connected to blockchain");
 
   // Step 3: Upload contract 
-  const wasmCode = fs.readFileSync("./contract.wasm");
+  const wasmCode = fs.readFileSync("./dinonum.wasm");
   const uploadReceipt = await client.upload(account.address, wasmCode, "auto", "Upload CosmWasm contract");
   const codeId = uploadReceipt.codeId;
   console.log(`Contract uploaded with Code ID: ${codeId}`);
 
   // Step 4: Instantiate contract
-  const initMsg = {}; // Replace with your contract's init message
+  const initMsg = {
+    count : 10
+  }; // Replace with your contract's init message
   const instantiateReceipt = await client.instantiate(account.address, codeId, initMsg, "My Oracle Contract", "auto");
   const contractAddress = instantiateReceipt.contractAddress;
+  console.log(`Contract instantiated at reciept: ${instantiateReceipt}`)
   console.log(`Contract instantiated at address: ${contractAddress}`);
 }
 

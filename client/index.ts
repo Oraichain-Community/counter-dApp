@@ -4,6 +4,12 @@ const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { assertIsBroadcastTxSuccess } = require("@cosmjs/stargate");
 require('dotenv').config();
 
+import {
+  DinonumQueryClient , 
+  DinonumClient 
+} from "./types/Dinonum.client";
+
+
 const mnemonic = process.env.MNEMONIC;
 
 
@@ -25,7 +31,7 @@ async function connect() {
 
 export async function getCosmWasmClient(
     rpcEndpoint: string,
-    mnemonic: string,
+    mnemonic: string | undefined,
     prefix: string
   ): Promise<CosmWasmClient> {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, { prefix });
@@ -37,7 +43,7 @@ export async function getCosmWasmClient(
 
   async function getSigningCosmWasmClient(
     rpcEndpoint: string,
-    mnemonic: string,
+    mnemonic:string | undefined,
     prefix: string
   ): Promise<SigningCosmWasmClient> {
     // Create a wallet from the mnemonic
@@ -56,3 +62,31 @@ export async function getCosmWasmClient(
   
     return client;
   }
+
+  export async function IncrementCounter() {
+    const address = connect()
+    const client = await getSigningCosmWasmClient("https://rpc.orai.io" , mnemonic , "orai");
+    const contractAddress = "orai1lkfg3s276jlwudq0690h68wdgx040celgrrx9w37zx4atf8aae6sp0tw0q"
+
+    const dinonum = new DinonumClient(client , (await address).address , contractAddress);
+
+    (await dinonum.add({num: 59}))
+  }
+
+  export async function GetCounter() {
+    const address = connect()
+    const client = await getCosmWasmClient("https://rpc.orai.io" , mnemonic , "orai");
+    const contractAddress = "orai1lkfg3s276jlwudq0690h68wdgx040celgrrx9w37zx4atf8aae6sp0tw0q"
+
+    const dinonum = new DinonumQueryClient(client , contractAddress);
+
+    const count = dinonum.getCount(); 
+    return (await count).count
+  }
+
+
+export async function main() { 
+   const count =  IncrementCounter()
+}
+
+main().catch(console.error);

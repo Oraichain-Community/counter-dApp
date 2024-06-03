@@ -41,6 +41,8 @@ pub fn execute(
     match msg {
         ExecuteMsg::Increment {} => execute::increment(deps),
         ExecuteMsg::Reset { count } => execute::reset(deps, info, count),
+        ExecuteMsg::Add { num } => execute::add(deps, num),
+        ExecuteMsg::Subtract { num } => execute::subtract(deps, num),
     }
 }
 
@@ -65,6 +67,24 @@ pub mod execute {
             Ok(state)
         })?;
         Ok(Response::new().add_attribute("action", "reset"))
+    }
+
+    pub fn add(deps: DepsMut, num: i32) -> Result<Response, ContractError> {
+        STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
+            state.count += num;
+            Ok(state)
+        })?;
+
+        Ok(Response::new().add_attribute("action", "add"))
+    }
+
+    pub fn subtract(deps: DepsMut, num: i32) -> Result<Response, ContractError> {
+        STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
+            state.count -= num;
+            Ok(state)
+        })?;
+
+        Ok(Response::new().add_attribute("action", "subtract"))
     }
 }
 
