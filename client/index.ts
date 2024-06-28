@@ -55,7 +55,7 @@ export async function getCosmWasmClient(
       rpcEndpoint,
       wallet,
       {
-        gasPrice: GasPrice.fromString('0.00025orai'),
+        gasPrice: GasPrice.fromString('0.0025orai'),
       }
     );
 
@@ -86,7 +86,9 @@ export async function getCosmWasmClient(
 
 
 export async function main() { 
-   const count =  IncrementCounter()
+   const count = await GetCounter()
+
+   console.log((await count))
 }
 
 main().catch(console.error);
